@@ -1,0 +1,15 @@
+@startuml
+class ProductoSimple << Entity >>
+class ProductoCompuesto<< Entity >>
+class Producto << Entity >>
+class Inventario << AggregateRoot >>
+
+Producto <|-- ProductoSimple
+Producto <|-- ProductoCompuesto
+
+Inventario --* ProductoSimple
+ProductoCompuesto "1" o-- "1..*" Producto
+@enduml
+
+
+
