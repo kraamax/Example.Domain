@@ -6,43 +6,66 @@ namespace Example.Domain
 {
     public class Inventario
     {
-        public Inventario(List<Producto> productos)
+        public Inventario(List<ProductoSimple> productos)
         {
             Productos = productos;
         }
-        public List<Producto> Productos { get; private set; }
-        public void NewProductoAdd(Producto producto)
-        {
-           
-            Productos.Add(producto);
-        }
-        private Producto BuscarProducto(string id) {
+        public List<ProductoSimple> Productos { get; private set; }
+       
+        private ProductoSimple BuscarProducto(string id) {
             foreach (var item in Productos)
             {
                 if (item.Id.Equals(id)) return item;
             }
             return null;
         }
-        public string IngresarProducto(string id, int cantidad)
+        public string RegistrarEntradaProducto(ProductoSimple producto)
         {
-            if (cantidad <= 0) {
+            if (producto.Cantidad <= 0) {
                 return "La cantidad de la entrada de debe ser mayor a 0";
             }
-            var producto = BuscarProducto(id);
-            return producto.ActualizarCantidad(cantidad,true);
+            var productoEnInventario= BuscarProducto(producto.Id);
+            if (productoEnInventario == null) {
+                Productos.Add(producto);
+                return $"La cantidad del producto {producto.Nombre} es {producto.Cantidad}";
+            }
+            else
+            {
+                return ActualizarProductoInventario(producto.Id, producto.Cantidad, true);
+            }
         }
-        public string SacarProducto(string id, int cantidad) {
+        public string RegistrarSalidaProductoSimple(string id, int cantidad)
+        {
             if (cantidad <= 0)
             {
                 return "La cantidad de la salida de debe ser mayor a 0";
             }
-            var producto = BuscarProducto(id);
-            if (producto.GetType().Equals("Example.Domain.ProductoCompuesto"))
+            else
             {
+                return ActualizarProductoInventario(id, cantidad, false);
             }
 
-                return producto.ActualizarCantidad(cantidad, false);
         }
+        public string RegistrarSalidaProductoCompuesto(ProductoCompuesto producto)
+        {
+            string a = "";
+            foreach (var item in producto.Descomponer())
+            {
+                a=a+"-"+ActualizarProductoInventario(item.Id, item.Cantidad, false);
+                a = a + $" {item.Nombre} {item.Cantidad}";
+            }
+            return "las cantidades actuales son: " + a;
+        }
+        public string ActualizarProductoInventario(string id,int cantidad, bool esEntrada ) {
+            foreach (var item in Productos)
+            {
+                if (item.Id.Equals(id)) {
+                    return item.ActualizarCantidad(cantidad, esEntrada);
+                }
+            }
+            return "";
+        }
+        
     }
    
 }
