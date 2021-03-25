@@ -52,9 +52,8 @@ namespace Example.Domain
             foreach (var item in producto.Descomponer())
             {
                 a=a+"-"+ActualizarProductoInventario(item.Id, item.Cantidad, false);
-                a = a + $" {item.Nombre} {item.Cantidad}";
             }
-            return "las cantidades actuales son: " + a;
+            return a;
         }
         public string ActualizarProductoInventario(string id,int cantidad, bool esEntrada ) {
             foreach (var item in Productos)

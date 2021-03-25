@@ -49,7 +49,7 @@ namespace Example.Domain.Test
          La cantidad de la salida de debe ser mayor a 0
          Dado un producto simple con id=123a, nombre=lechuga, cantidad=4, costo=1000, precio=1500
          cuando se va a registrar la salida de 0 unidades 
-         entonces mostrara el mensaje la cantidad del producto lechuga es 2
+         entonces mostrara el mensaje La cantidad de la salida de debe ser mayor a 0
         */
         [Test]
         public void NoPuedoRegistrarUnaSalidaDeProductoConCantidadMenorOIgualACero()
@@ -78,6 +78,16 @@ namespace Example.Domain.Test
             Assert.AreEqual("La cantidad del producto lechuga es 2", resultado);
         }
         //producto compuesto
+        /*  HU1.SALIDA DE PRODUCTO(3.5)
+  COMO USUARIO QUIERO REGISTRAR LA SALIDA PRODUCTOS
+  CRITERIOS DE ACEPTACIÓN
+  1. La cantidad de la salida de debe ser mayor a 0
+  2. En caso de un producto sencillo la cantidad de la salida se le disminuirá a la cantidad existente del producto.
+  3. En caso de un producto compuesto la cantidad de la salida se le disminuirá a la cantidad existente de cada uno de su ingrediente
+  Dado un producto compuesto llamado la ensalada conformado por "123a", 1500, 1000, 4, "lechuga" y "123b", 1500, 1000, 4, "tomate"
+  cuando se va a registrar la salida de una ensalada
+  entonces La cantidad del producto lechuga es 2 -La cantidad del producto tomate es 2
+   */
         [Test]
          public void Test4()
          {
@@ -94,7 +104,7 @@ namespace Example.Domain.Test
              var ensalada = new ProductoCompuesto("123c", 4000, 2000, 1, "Ensalada", IngredientesEnsalada);
              //inventario.RegistrarSalidaProductoCompuesto(combo);
              var resultado = inventario.RegistrarSalidaProductoCompuesto(ensalada);
-             Assert.AreEqual("La cantidad del producto lechuga es 2", resultado);
+             Assert.AreEqual("-La cantidad del producto lechuga es 2-La cantidad del producto tomate es 2", resultado);
          }
 
     }
