@@ -51,8 +51,9 @@ namespace Example.Domain
             string a = "";
             foreach (var item in producto.Descomponer())
             {
-                a=a+"-"+ActualizarProductoInventario(item.Id, item.Cantidad, false);
+                 a=a+"-"+ActualizarProductoInventario(item.Id, item.Cantidad, false);
             }
+            Console.WriteLine(a);
             return a;
         }
         public string ActualizarProductoInventario(string id,int cantidad, bool esEntrada ) {

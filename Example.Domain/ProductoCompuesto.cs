@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Reflection;
 
 namespace Example.Domain
 {
     public class ProductoCompuesto : Producto
     {
-        public decimal Precio { get; private set; }
-        public decimal Costo { get; private set; }
-        public ProductoCompuesto(string id, decimal precio, decimal costo, int cantidad, string nombre, List<Producto> productos) : base(id, cantidad, nombre)
+        
+        public List<Producto> Productos { get; private set; }
+       
+        public ProductoCompuesto(string id, decimal precio, int cantidad, string nombre, List<Producto> productos) : base(id, cantidad, nombre,precio)
         {
             Productos = productos;
+            CalcularCosto();
         }
 
-        public List<Producto> Productos { get; private set; }
 
         public  string ActualizarCantidad(int valor, bool esEntrada, List<Producto> productosInventario)
         {
@@ -26,8 +28,9 @@ namespace Example.Domain
             List<ProductoSimple> pSimple = new List<ProductoSimple>();
             foreach (var item in Productos)
             {
-                if (item.GetType().Equals("Example.Domain.ProductoCompuesto"))
+                if (item.GetType().Equals(typeof(ProductoCompuesto)))
                 {
+                    Console.WriteLine("Aca Stoy");
                     var newItem = (ProductoCompuesto)item;
                     foreach (var p in newItem.Descomponer())
                     {
@@ -37,12 +40,33 @@ namespace Example.Domain
                 else
                 {
                         pSimple.Add((ProductoSimple)item);
-                    Console.WriteLine(item.GetType());
                 }
             }
             return pSimple;
         }
-        
-        
+        public decimal CalcularCosto()
+        {
+            
+            foreach (var item in Productos)
+            {
+                if (item.GetType().Equals(typeof(ProductoCompuesto)))
+                {
+                    var newItem = (ProductoCompuesto)item;
+                    foreach (var p in newItem.Descomponer())
+                    {
+                        Console.WriteLine(p.Costo);
+                        Costo = Costo +(p.Costo*p.Cantidad);
+                    }
+                    Console.WriteLine(Costo);
+                }
+                else
+                {
+                    Console.WriteLine(item.Costo);
+                    Costo = Costo + (item.Costo * item.Cantidad); 
+                }
+            }
+            return Costo;
+        }
+
     }
 }

@@ -7,10 +7,9 @@ namespace Example.Domain
 {
     public class ProductoSimple : Producto
     {
-        public decimal Precio { get; private set; }
-        public decimal Costo { get; private set; }
-        public ProductoSimple(string id, decimal precio, decimal costo, int cantidad, string nombre) : base(id,  cantidad, nombre)
+        public ProductoSimple(string id, decimal precio, decimal costo, int cantidad, string nombre) : base(id,  cantidad, nombre, precio)
         {
+            Costo = costo;
         }
 
         public  string ActualizarCantidad(int valor, bool esEntrada)
