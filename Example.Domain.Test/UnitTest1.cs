@@ -136,8 +136,8 @@ namespace Example.Domain.Test
             ensaladaConGaseosaComposicicion.Add(gaseosa);
             var ensaladaConGaseosaCombo = new ProductoCompuesto("123d", 4000, 1, "EnsaladaConGaseosa", ensaladaConGaseosaComposicicion);
             //inventario.RegistrarSalidaProductoCompuesto(combo);
-            var resultado = ensaladaConGaseosaCombo.CalcularCosto();
-            Assert.AreEqual("-La cantidad del producto lechuga es 3-La cantidad del producto tomate es 3-La cantidad del producto Gaseosa es 19", resultado);
+            var resultado = "El costo es: $"+ ensaladaConGaseosaCombo.CalcularCosto();
+            Assert.AreEqual("El costo es: $3300", resultado);
         }
 
     }

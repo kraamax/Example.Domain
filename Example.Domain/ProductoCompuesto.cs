@@ -13,7 +13,7 @@ namespace Example.Domain
         public ProductoCompuesto(string id, decimal precio, int cantidad, string nombre, List<Producto> productos) : base(id, cantidad, nombre,precio)
         {
             Productos = productos;
-            CalcularCosto();
+            Costo = CalcularCosto();
         }
 
 
@@ -46,7 +46,7 @@ namespace Example.Domain
         }
         public decimal CalcularCosto()
         {
-            
+            decimal costo = 0;
             foreach (var item in Productos)
             {
                 if (item.GetType().Equals(typeof(ProductoCompuesto)))
@@ -55,17 +55,17 @@ namespace Example.Domain
                     foreach (var p in newItem.Descomponer())
                     {
                         Console.WriteLine(p.Costo);
-                        Costo = Costo +(p.Costo*p.Cantidad);
+                        costo = costo +(p.Costo*p.Cantidad);
                     }
                     Console.WriteLine(Costo);
                 }
                 else
                 {
                     Console.WriteLine(item.Costo);
-                    Costo = Costo + (item.Costo * item.Cantidad); 
+                    costo = costo + (item.Costo * item.Cantidad); 
                 }
             }
-            return Costo;
+            return costo;
         }
 
     }
