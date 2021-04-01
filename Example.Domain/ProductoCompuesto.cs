@@ -7,17 +7,17 @@ namespace Example.Domain
 {
     public class ProductoCompuesto : Producto
     {
-        
+
         public List<Producto> Productos { get; private set; }
-       
-        public ProductoCompuesto(string id, decimal precio, int cantidad, string nombre, List<Producto> productos) : base(id, cantidad, nombre,precio)
+
+        public ProductoCompuesto(string id, decimal precio, int cantidad, string nombre, List<Producto> productos) : base(id, cantidad, nombre, precio)
         {
             Productos = productos;
             Costo = CalcularCosto();
         }
 
 
-        public  string ActualizarCantidad(int valor, bool esEntrada, List<Producto> productosInventario)
+        public override string ActualizarCantidad(int valor, bool esEntrada)
         {
             Cantidad = Cantidad + valor;
             return "";
@@ -68,5 +68,18 @@ namespace Example.Domain
             return costo;
         }
 
+        public override string RegistrarEntradaProducto(int cantidad)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override string RegistrarSalidaProducto(int cantidad)
+        {
+            foreach (var item in Productos)
+            {
+                    item.RegistrarSalidaProducto(cantidad);
+            }
+            return $"Salida registrada {Nombre}, cantidad {cantidad} precio {Precio*cantidad}";
+        }
     }
 }

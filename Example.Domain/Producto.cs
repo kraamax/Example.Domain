@@ -17,6 +17,10 @@ namespace Example.Domain
         public string Nombre { get; private set; }
         public decimal Costo { get; protected set; }
         public decimal Precio { get; protected set; }
+        public abstract string ActualizarCantidad(int valor, bool esEntrada);
+        public abstract string RegistrarEntradaProducto(int cantidad);
+        public abstract string RegistrarSalidaProducto(int cantidad);
+
 
 
     }
