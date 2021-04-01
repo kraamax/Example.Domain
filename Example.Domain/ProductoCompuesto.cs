@@ -17,12 +17,6 @@ namespace Example.Domain
         }
 
 
-        public override string ActualizarCantidad(int valor, bool esEntrada)
-        {
-            Cantidad = Cantidad + valor;
-            return "";
-        }
-
         public List<ProductoSimple> Descomponer()
         {
             List<ProductoSimple> pSimple = new List<ProductoSimple>();
@@ -30,7 +24,6 @@ namespace Example.Domain
             {
                 if (item.GetType().Equals(typeof(ProductoCompuesto)))
                 {
-                    Console.WriteLine("Aca Stoy");
                     var newItem = (ProductoCompuesto)item;
                     foreach (var p in newItem.Descomponer())
                     {
@@ -70,7 +63,11 @@ namespace Example.Domain
 
         public override string RegistrarEntradaProducto(int cantidad)
         {
-            throw new NotImplementedException();
+             if (cantidad <= 0) {
+                return "La cantidad de la entrada de debe ser mayor a 0";
+            }
+            Cantidad = Cantidad + cantidad;
+            return $"La cantidad del producto {Nombre} es {Cantidad}";
         }
 
         public override string RegistrarSalidaProducto(int cantidad)

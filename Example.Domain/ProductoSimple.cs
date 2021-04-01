@@ -12,14 +12,7 @@ namespace Example.Domain
             Costo = costo;
         }
 
-        public override string ActualizarCantidad(int valor, bool esEntrada)
-        {
-            if (Cantidad < 0) {
-                return "La cantidad de la entrada de debe ser mayor a 0";
-            }
-            Cantidad = esEntrada ? Cantidad + valor : Cantidad - valor;
-            return $"La cantidad del producto {Nombre} es {Cantidad}";
-        }
+    
 
         public override string RegistrarEntradaProducto(int cantidad)
         {
