@@ -99,7 +99,7 @@ namespace Example.Domain.Test
         }
         /*5. El costo de los productos compuestos corresponden al costo de sus ingredientes por la cantidad de estos.*/
         [Test]
-        public void Test5()
+        public void ElCostoDeLosProductosCorrespondeAlCostodeSusIngredientes()
         {
             
             List<Producto> IngredientesEnsalada = new List<Producto>();
